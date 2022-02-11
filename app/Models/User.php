@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Project\Project;
+use App\Models\Project\PivotProjectUser;
 
 class User extends Authenticatable
 {
@@ -41,4 +43,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function projects()
+    {
+        /* return $this->belongsToMany(Project::class, 'user_project', 'user_id', 'project_id'); */
+        return $this->belongsToMany(Project::class, 'project_users', 'user_id', 'project_id')->using(PivotProjectUser::class);
+    }
 }
