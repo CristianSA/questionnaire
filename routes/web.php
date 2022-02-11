@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\AdminAuthController;
+use App\Http\Controllers\Project\ProjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,10 @@ Route::prefix('administrator')->group(function(){
     Route::controller(AdminController::class)->group(function(){
         Route::get('/dashboard', 'dashboard')->name('admin dashboard');
         Route::post('/logout', 'logoutAdmin')->name('admin logout');
+    });
+
+    Route::controller(ProjectController::class)->group(function(){
+        Route::get('/projects', 'index')->name('admin projects');
     });
 });
 
