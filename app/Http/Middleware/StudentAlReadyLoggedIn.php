@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Auth;
 
-class AdminAlReadyLoggedIn
+class StudentAlReadyLoggedIn
 {
     /**
      * Handle an incoming request.
@@ -17,10 +17,10 @@ class AdminAlReadyLoggedIn
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::guard('admin')->check()) {
+        if(Auth::guard('student')->check()) {
             return $next($request);
         }
         
-        return redirect('/login');
+        return redirect('/');
     }
 }
