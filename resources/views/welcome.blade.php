@@ -7,7 +7,7 @@
             
             <div class="card">
                 <div class="card-body">
-                    <form method="POST" >
+                    <form method="POST" action="{{ route('student validate') }}">
                         @csrf
                         <div class="form-group">
                             <label for="email">Email</label>
