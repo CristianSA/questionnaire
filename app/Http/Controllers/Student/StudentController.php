@@ -8,6 +8,8 @@ use App\Models\Student\Student;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use App\Models\Project\Project;
+use App\Models\Project\Module\Module;
 
 class StudentController extends Controller
 {
@@ -39,5 +41,31 @@ class StudentController extends Controller
 
 
         return redirect()->guest(route('student login'));
+    }
+
+    public function projects()
+    {
+        return view('student.projects.index');
+    }
+
+    public function modules(Project $project)
+    {
+        return view('student.projects.modules.index', compact('project'));
+    }
+
+    public function module(Module $module)
+    {
+        return view('student.projects.modules.module', compact('module'));
+    }
+
+    public function questions(Module $module)
+    {
+        $questions = $module->questions;
+        return view('student.projects.modules.questions.index', compact('questions', 'module'));
+    }
+
+    public function results(Module $module)
+    {
+        return view('student.projects.modules.questions.results', compact('module'));
     }
 }

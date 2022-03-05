@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Projects\ProjectController;
+use App\Http\Controllers\Api\Students\StudentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,4 +24,13 @@ Route::controller(ProjectController::class)->group(function(){
     Route::post('/project', 'store');
     Route::put('/project/{project}', 'update');
     Route::delete('/project/{project}', 'destroy');
+});
+
+//STUDENTS
+Route::controller(StudentController::class)->group(function(){
+    Route::get('/projects-by-student/{student}', 'projectsByStudent');
+    Route::get('/modules-by-project/{project}', 'modulesByProjects');
+    Route::get('/attempts-by-student/{student}', 'attemptsByStudent');
+    Route::post('/answer-question', 'answerQuestion');
+    Route::get('/testing', 'testing');
 });
