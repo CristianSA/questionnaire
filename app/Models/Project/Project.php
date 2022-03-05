@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Models\Project\PivotProjectStudent;
 use App\Models\Project\Password;
 use App\Models\Student\Student;
+use App\Models\Project\Module\Module;
+use App\Models\Project\Module\Answer\Answer;
 
 class Project extends Model
 {
@@ -24,6 +26,16 @@ class Project extends Model
     public function passwords()
     {
         return $this->hasMany(Password::class, 'project_id');
+    }
+
+    public function modules()
+    {
+        return $this->hasMany(Module::class, 'project_id');
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class, 'project_id');
     }
 
     //Scopes

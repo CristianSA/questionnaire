@@ -47,8 +47,13 @@ Route::controller(StudentAuthController::class)->group(function(){
     Route::post('/logout', 'logoutStudent')->name('student logout');
 });
 
-//Route::get('/register/project', 'App\Http\Controllers\Student\StudentController@register')->name('student register');
 Route::controller(StudentController::class)->group(function(){
     Route::get('/dashboard', 'dashboard')->name('student dashboard');
+    Route::get('/my-projects', 'projects')->name('student projects');
+    Route::get('/modules/{project}', 'modules')->name('student modules');
+    Route::get('/module/{module}', 'module')->name('student module');
+    Route::get('/module/questions/{module}', 'questions')->name('student questions');
+    Route::get('/module/questions/results/{module}', 'results')->name('student results');
 });
+
 

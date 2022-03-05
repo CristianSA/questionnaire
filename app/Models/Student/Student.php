@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Project\Project;
 use App\Models\Project\PivotProjectStudent;
+use App\Models\Student\Answer\Answer;
 
 class Student extends Authenticatable
 {
@@ -19,13 +20,19 @@ class Student extends Authenticatable
         'name', 'nickname', 'email', 'password', 'status',
     ];
 
+    protected $appends = [];
+
     protected $hidden = [
         'password'
     ];
 
     public function projects()
     {
-        /* return $this->belongsToMany(Project::class, 'user_project', 'user_id', 'project_id'); */
         return $this->belongsToMany(Project::class, 'project_students', 'student_id', 'project_id')->using(PivotProjectStudent::class);
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class, 'student_id');
     }
 }
