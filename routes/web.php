@@ -44,16 +44,17 @@ Route::controller(StudentAuthController::class)->group(function(){
     Route::post('/login/validate', 'loginValidate')->name('student validate');
     Route::get('/register/{project}', 'register')->name('student register');
     Route::post('/register/validate/{project}', 'registerValidate')->name('student register-validate');
-    Route::post('/logout', 'logoutStudent')->name('student logout');
 });
 
 Route::controller(StudentController::class)->group(function(){
     Route::get('/dashboard', 'dashboard')->name('student dashboard');
     Route::get('/my-projects', 'projects')->name('student projects');
+    Route::get('/my-results', 'results')->name('student results');
     Route::get('/modules/{project}', 'modules')->name('student modules');
     Route::get('/module/{module}', 'module')->name('student module');
     Route::get('/module/questions/{module}', 'questions')->name('student questions');
-    Route::get('/module/questions/results/{module}', 'results')->name('student results');
+    Route::get('/module/questions/results/{module}', 'result')->name('student result');
+    Route::post('/logout', 'logoutStudent')->name('student logout');
 });
 
 

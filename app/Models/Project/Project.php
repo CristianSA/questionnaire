@@ -16,7 +16,7 @@ class Project extends Model
 {
     use HasFactory;
 
-    protected $appends = ['password', 'it_is_accesible', 'is_active'];
+    protected $appends = ['password', 'it_is_accesible', 'is_active', 'ids_modules'];
 
     public function students()
     {
@@ -70,6 +70,12 @@ class Project extends Model
     {
         $password = $this->passwords()->first();
         return $password ? $password->password : null;
+    }
+
+    public function getIdsModulesAttribute()
+    {
+        $modules = $this->modules()->get();
+        return $modules ? $modules->pluck('id') : [];
     }
 
 

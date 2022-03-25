@@ -24,21 +24,44 @@ class StudentController extends Controller
 
     public function testing(Request $request)
     {
-        $question_id = 2;
+        $student = Student::find($request->student_id);
+
+        //que queremos mostrar
+        // 1 mostrar los modulos del proyecto al que esta registrado el usuario
+        // de cada modulo mostrar el resultado del questionario mostrando: cantidad respondidas / total preg
+        // mostrar el porcentaje y mostrar si esta aprobado o no
+
+
+        $projects = $student->projects;
+        //los id de los modules que corresponden al proyecto del usuario
+        $modules = $projects->map(function($item){
+            return $item->modules->pluck('id');
+        })->values();
+
+        return $modules;
+
+        $collection = collect([
+            'projects' => $projects,
+        ]);
+        //get projects
+        //get modules
+
+        return $collection;
+        /* $question_id = 2;
         $question = Question::find($question_id);
         $is_correct = $question->answer == 'A' ? 1 : 0;
         $module_id = 1;
         $module = Module::find($module_id);
         $project = Project::find(1);
-        $student = Student::find($request->student_id);
+        $student = Student::find($request->student_id); */
         /* return $student->ids_questions; */
-        $attempt = $student->answers()
+        /* $attempt = $student->answers()
                     ->byProject(1)
                     ->byModule(1)
                     ->byQuestion(2)
                     ->pluck('attempt')
                     ->max();
-        return $attempt;
+        return $attempt; */
         /* return $module->answers()->correctAnswers()->byAttempt(1)->count();  *///sale 0 porque esa si la he fallado
         /* return $question->answers()->correctAnswers()->count(); */
         /* if($attempt && $attempt == $project->attempts) return 'Ya no continua '.$attempt.' <= '.$project->attempts;
@@ -122,4 +145,26 @@ class StudentController extends Controller
         }
 
     }
+
+    public function studentProjectResults(Student $student,Request $request)
+    {
+        $modules = Module::byProject($request->project_id)
+            ->orderBy('order')
+            ->get();
+        
+        $answers = $modules->map(function($item) use ($student) {
+            return $item->answers()
+                ->byStudent($student->id)
+                ->get()
+                ->groupBy('attempt');
+        })->values();
+
+        //
+
+        $object = new \stdClass();
+        $object->modules = $modules;
+        $object->answers = $answers;
+        return $object;
+    }
+
 }

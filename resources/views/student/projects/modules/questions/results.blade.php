@@ -1,5 +1,5 @@
 @extends('layouts.student.layout')
 @section('title', 'Results')
 @section('content')
-<student-results :module="{{ $module }}"></student-results>
+<student-result :module="{{ $module }}"></student-result>
 @endsection
