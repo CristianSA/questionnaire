@@ -28,6 +28,9 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="{{ route('student projects') }}">My projects</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{{ route('student results') }}">My results</a>
+                        </li>
                     
                     </ul>
                     <form action="{{ route('student logout') }}" method="POST" class="d-flex">

@@ -29,7 +29,7 @@ class StudentController extends Controller
     }
 
 
-    public function logout()
+    public function logoutStudent(Request $request)
     {
         Auth::guard('student')->logout();
 
@@ -40,7 +40,7 @@ class StudentController extends Controller
         $request->session()->regenerate();
 
 
-        return redirect()->guest(route('student login'));
+        return redirect()->guest(route('index guest'));
     }
 
     public function projects()
@@ -64,7 +64,12 @@ class StudentController extends Controller
         return view('student.projects.modules.questions.index', compact('questions', 'module'));
     }
 
-    public function results(Module $module)
+    public function results()
+    {
+        return view('student.results.index');
+    }
+
+    public function result(Module $module)
     {
         return view('student.projects.modules.questions.results', compact('module'));
     }

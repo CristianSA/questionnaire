@@ -35,4 +35,6 @@ class Student extends Authenticatable
     {
         return $this->hasMany(Answer::class, 'student_id');
     }
+
+    //MUTATOR
 }

@@ -12,7 +12,7 @@ class Module extends Model
 {
     use HasFactory;
 
-    protected $appends = ['attempt'];
+    protected $appends = ['attempt', 'number_of_questions'];
 
     public function project()
     {
@@ -29,12 +29,26 @@ class Module extends Model
         return $this->hasMany(Answer::class, 'module_id');
     }
 
+    //SCOPE
+
+    public function scopeByProject($query, $project_id)
+    {
+        if($project_id)
+            return $query->where('project_id', $project_id);
+    }
+
     //MUTATOR
     
     public function getAttemptAttribute()
     {
         $project = $this->project()->first();
         return $project ? $project->attempts : 0;
+    }
+
+    public function getNumberOfQuestionsAttribute()
+    {
+        $questions = $this->questions()->get();
+        return $questions ? $questions->count() : 0;
     }
 
 

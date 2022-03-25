@@ -33,4 +33,5 @@ Route::controller(StudentController::class)->group(function(){
     Route::get('/attempts-by-student/{student}', 'attemptsByStudent');
     Route::post('/answer-question', 'answerQuestion');
     Route::get('/testing', 'testing');
+    Route::get('/{student}/project-results', 'studentProjectResults');
 });

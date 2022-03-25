@@ -59,4 +59,10 @@ class Answer extends Model
     {
         return $query->where('attempt', $attempt);
     }
+
+    public function scopeByStudent($query, $student_id)
+    {
+        if($student_id)
+            return $query->where('student_id', $student_id);
+    }
 }
