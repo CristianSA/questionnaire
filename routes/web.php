@@ -36,6 +36,7 @@ Route::prefix('administrator')->group(function(){
 
     Route::controller(ProjectController::class)->group(function(){
         Route::get('/projects', 'index')->name('admin projects');
+        Route::get('/show/{project}', 'show')->name('admin show project');
     });
 });
 

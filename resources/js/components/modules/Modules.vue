@@ -2,14 +2,14 @@
     <div>
         <v-container data-app>
             <v-toolbar
-                class="mb-2 transparent"
+                class="mb-4 primary"
+                elevation="4"
             >
                 <v-toolbar-title>Projects</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-btn
                     depressed
-                    dark
-                    color="primary"
+                    class="btn btn-primary"
                     @click="addProject()"
                 >
                     Create
@@ -35,15 +35,13 @@
                             <v-icon>mdi-close</v-icon>
                         </v-btn>
                         <v-toolbar-title v-if="editMode">Edit Project</v-toolbar-title>
-                        <v-toolbar-title v-else-if="showMode">Show Project</v-toolbar-title>
-                        <v-toolbar-title v-else-if="showAnalytic">Show Analytics</v-toolbar-title>
+                        <v-toolbar-title v-if="showMode">Show Project</v-toolbar-title>
                         <v-toolbar-title v-else>New Project</v-toolbar-title>
 
                     </v-toolbar>
                     <v-card-text>
-                        <form-new-project v-if="!showMode && !showAnalytic" :editMode="editMode" :showMode="showMode" :project="project" @save-project="saveProject" @update-project="updateProject"></form-new-project>
+                        <form-new-project v-if="editMode" :editMode="editMode" :showMode="showMode" :project="project" @save-project="saveProject" @update-project="updateProject"></form-new-project>
                         <show-project v-if="showMode" :project="project"></show-project>
-                        <show-analytic-project v-if="showAnalytic" :project="project"></show-analytic-project>
                     </v-card-text>
                 </v-card>
             </v-dialog>
@@ -80,24 +78,15 @@
                     <v-icon
                         icon
                         class="mr-2"
-                        color="accent"
                         @click="editProject(item)"
                     >
                         mdi-pencil
                     </v-icon>
                     <v-icon
-                        v-if="item.is_delete"
-                        color="error"
                         icon
                         @click="deleteProject(item)"
                     >
                         mdi-delete
-                    </v-icon>
-                    <v-icon
-                        color="success"
-                        @click="showAnalytics(item)"
-                        icon>
-                        mdi-google-analytics
                     </v-icon>
                 </template>
             </v-data-table>
@@ -119,25 +108,13 @@
                 },
                 { text: 'Start', value: 'start' },
                 { text: 'End', value: 'end' },
-                { text: 'Status', value: 'project_status' },
+                { text: 'Status', value: 'status' },
                 { text: 'Type', value: 'type' },
                 { text: 'Actions', value: 'actions' },
             ],
             dialog: false,
             editMode: false,
             showMode: false,
-            showAnalytic: false,
-            projectEmpty: {
-                name: '',
-                start: '',
-                end: '',
-                type: '',
-                attempt: '',
-                status: false,
-                project_type: '',
-                password_project: '',
-                file: '',
-            },
         }),
 
         mounted(){
@@ -166,10 +143,8 @@
             },
 
             addProject(){
-                this.project = this.projectEmpty
                 this.showMode = false
                 this.editMode = false
-                this.showAnalytic = false
                 this.dialog = true
             },
 
@@ -177,20 +152,20 @@
                 this.project = item
                 this.showMode = false
                 this.editMode = true
-                this.showAnalytic = false
                 this.dialog = true
             },
 
             showProject(item){
-                console.log(item.id)
-                window.location.href = `/administrator/show/${item.id}`
+                this.project = item
+                this.editMode = false
+                this.showMode = true
+                this.dialog = true
             },
 
             saveProject(){
                 this.showMode = false
                 this.editMode = false
                 this.getProjects()
-                this.project = this.projectEmpty
                 this.dialog = false
             },
 
@@ -198,20 +173,11 @@
                 this.showMode = false
                 this.editMode = false
                 this.getProjects()
-                this.project = this.projectEmpty
                 this.dialog = false
             },
 
             deleteProject(item){
-                
-            },
-
-            showAnalytics(item){
-                this.project = item
-                this.showMode = false
-                this.editMode = false
-                this.showAnalytic = true
-                this.dialog = true
+                this.getProjects();
             },
         },
 

@@ -16,7 +16,7 @@ class Project extends Model
 {
     use HasFactory;
 
-    protected $appends = ['password', 'it_is_accesible', 'is_active', 'ids_modules'];
+    protected $appends = ['password', 'it_is_accesible', 'is_active', 'ids_modules', 'is_delete', 'project_status'];
 
     public function students()
     {
@@ -76,6 +76,21 @@ class Project extends Model
     {
         $modules = $this->modules()->get();
         return $modules ? $modules->pluck('id') : [];
+    }
+
+    public function getIsDeleteAttribute()
+    {
+        if($this->status)
+            return false;
+        
+        return true;
+    }
+
+    public function getProjectStatusAttribute()
+    {
+        if($this->status)
+            return 'Public';
+        return 'Private';
     }
 
 

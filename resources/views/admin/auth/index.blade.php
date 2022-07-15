@@ -20,7 +20,7 @@
                         </div>
                         
                         
-                        <input type="submit" class="btn btn-block btn-success text-white" value="Access"/>
+                        <input type="submit" class="btn button-form mt-2" value="Access"/>
                     </form>
                 </div>
                 

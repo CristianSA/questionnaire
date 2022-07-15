@@ -41,7 +41,9 @@
         </div>
     </nav>
     <div id="app" class="content">
-        @yield('content')
+        <v-app dark>
+            @yield('content')
+        </v-app>
     </div>
     
     <script src="{{ mix('/js/app.js') }}"></script>

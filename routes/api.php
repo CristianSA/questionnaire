@@ -24,6 +24,7 @@ Route::controller(ProjectController::class)->group(function(){
     Route::post('/project', 'store');
     Route::put('/project/{project}', 'update');
     Route::delete('/project/{project}', 'destroy');
+    Route::get('/{project}/analytics', 'analytics');
 });
 
 //STUDENTS
