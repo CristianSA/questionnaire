@@ -13,6 +13,8 @@ class Answer extends Model
 {
     use HasFactory;
 
+    protected $appends = ['student_name', 'student_email'];
+
     public function project()
     {
         return $this->belongsTo(Project::class, 'project_id');
@@ -55,6 +57,11 @@ class Answer extends Model
         return $query->where('correct', true);
     }
 
+    public function scopeWrongAnswers($query)
+    {
+        return $query->where('correct', false);
+    }
+
     public function scopeByAttempt($query, $attempt)
     {
         return $query->where('attempt', $attempt);
@@ -64,5 +71,24 @@ class Answer extends Model
     {
         if($student_id)
             return $query->where('student_id', $student_id);
+    }
+
+    public function scopeByStudents($query, $students)
+    {
+        return $query->whereIn('student_id', $students);
+    }
+
+    //MUTATOR
+
+    
+
+    public function getStudentNameAttribute()
+    {
+        return $this->student()->first()->name;
+    }
+
+    public function getStudentEmailAttribute()
+    {
+        return $this->student()->first()->email;
     }
 }

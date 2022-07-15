@@ -19,4 +19,9 @@ class ProjectController extends Controller
         return view('admin.projects.index', compact('projects'));
     }
 
+    public function show(Project $project)
+    {
+        return view('admin.projects.show', ['project' => $project]);
+    }
+
 }

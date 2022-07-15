@@ -43,25 +43,14 @@
                     ></v-text-field>
                 </v-col>
 
-                <v-col cols="6" v-if="project_type === 'MULTIPLE'">
-                    <v-file-input
+                <v-col cols="6" v-if="project_type === 'MULTIPE'">
+                    <v-select
+                        label="Type"
                         outlined
-                        dense
-                        ref="file"
-                        v-model="file"
-                        show-size
-                        prepend-icon="mdi-paperclib"
-                        accept=".xlsx, .xls"
-                    >
-                        <template v-slot:selection="{text}">
-                            <v-chip
-                                small
-                                label
-                                color="primary">
-                                {{ text }}    
-                            </v-chip>
-                        </template>
-                    </v-file-input>
+                        v-model="type"
+                        :items="allTypes"
+                        @change="projectType()"
+                    ></v-select>
                 </v-col>
 
             </v-row>
@@ -190,31 +179,24 @@
             end: "",
             menu_end: false,
             type: "",
-            allTypes: ['ONLY', 'MULTIPLE'],
+            allTypes: ['ONLY', 'MULTIPE'],
             attempt: "",
             status: false,
             project_type: "",
             password_project: "",
-            file: '',
         }),
 
         watch: {
             project: {
                 immediate: true,
                 handler(newVal, oldVal){
-                    if(this.editMode){
-                        this.displayInfo()
-                    }else{
-                        this.clear()
-                    }
-                    
-                    
+                    if(this.editMode) this.displayInfo()
                 }
             },
         },
 
         mounted(){
-            //this.status = false
+            
         },
 
         computed:{
@@ -234,7 +216,6 @@
                     attempt:                this.attempt,
                     status:                 this.status,
                     password_project:       this.password_project,
-                    file:                   this.file,
                 }
             },
 
@@ -246,27 +227,13 @@
                 this.attempt                = this.project.attempts
                 this.status                 = this.project.status
                 this.password_project       = this.project.password
-                this.file                   = ''
             },
             
             saveProject(){
                 let url = `/api/project`
 
-                /* console.log(this.file)
-                let formData = new FormData()
-                
-                formData.append('name', this.name);
-                formData.append('start', this.start);
-                formData.append('end', this.end);
-                formData.append('type', this.type);
-                formData.append('attempt', this.attempt);
-                formData.append('status', this.status);
-                formData.append('password_project', this.password_project);
-                formData.append('file', this.file); */
-                
-
                 const params = this.getParams()
-                /* console.log(formData) */
+
                 axios.post(url, params)
                 .then((response => {
                     let project = response.data
@@ -293,13 +260,12 @@
             },
 
             clear(){
-                this.name                   = ''
-                this.start                  = ''
-                this.end                    = ''
-                this.type                   = ''
-                this.attempt                = ''
-                this.status                 = false
-                this.password_project       = ''
+                this.name       = ''
+                this.start      = ''
+                this.end        = ''
+                this.type       = ''
+                this.attempt    = ''
+                this.status     = ''
             },
 
             projectType(){

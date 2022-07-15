@@ -11,6 +11,8 @@ class Question extends Model
 {
     use HasFactory;
 
+    protected $appends = ['total_correct_answers', 'total_wrong_answers'];
+
     public function module()
     {
         return $this->belongsTo(Module::class, 'module_id');
@@ -19,6 +21,18 @@ class Question extends Model
     public function answers()
     {
         return $this->hasMany(Answer::class, 'question_id');
+    }
+
+    //MUTATORS
+
+    public function getTotalCorrectAnswersAttribute()
+    {
+        return $this->answers()->correctAnswers()->count();
+    }
+
+    public function getTotalWrongAnswersAttribute()
+    {
+        return $this->answers()->wrongAnswers()->count();
     }
 
 }

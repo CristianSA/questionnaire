@@ -16,6 +16,7 @@ export default new Vuetify({
                 warning: '#f4d03f',
                 accent: '#8c9eff',
                 error: '#e74c3c',
+                success: '#13C865',
             },
             light: {
                 primary: '#3f51b5',
@@ -23,6 +24,7 @@ export default new Vuetify({
                 warning: '#f4d03f',
                 accent: '#8c9eff',
                 error: '#e74c3c',
+                success: '#13C865',
             }
         },
     },
