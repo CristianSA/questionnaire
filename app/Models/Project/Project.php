@@ -11,6 +11,7 @@ use App\Models\Project\Password;
 use App\Models\Student\Student;
 use App\Models\Project\Module\Module;
 use App\Models\Project\Module\Answer\Answer;
+use App\Models\Image\Image;
 
 class Project extends Model
 {
@@ -38,6 +39,11 @@ class Project extends Model
         return $this->hasMany(Answer::class, 'project_id');
     }
 
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
+
     //Scopes
 
     public function scopeUserRegisteredInProject($query, $email)
@@ -60,9 +66,9 @@ class Project extends Model
     {
         $now = Carbon::now()->format('Y-m-d');
 
-        if(strtotime($now) >= strtotime($this->start) && strtotime($now) <= strtotime($this->end)) 
+        if(strtotime($now) >= strtotime($this->start) && strtotime($now) <= strtotime($this->end))
             return true;
-        
+
         return false;
     }
 
@@ -82,7 +88,7 @@ class Project extends Model
     {
         if($this->status)
             return false;
-        
+
         return true;
     }
 

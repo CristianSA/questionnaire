@@ -45,7 +45,7 @@
             </v-tabs>
             <v-tabs-items v-model="tabs">
                 <v-tab-item value="tab-images">
-                    <index-project-images/>
+                    <index-images :id="project.id" :imageable_type="'Projects'"/>
                 </v-tab-item>
                 <v-tab-item value="tab-modules">
                     test 2

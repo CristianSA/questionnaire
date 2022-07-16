@@ -2,15 +2,15 @@
     <div>
         <v-container data-app>
             <v-toolbar
-                class="mb-2 transparent"
+                class="mb-2 elevation-0"
             >
-                <v-toolbar-title>Projects</v-toolbar-title>
+                <v-toolbar-title>Images</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-btn
                     depressed
                     dark
                     color="primary"
-                    @click="addProject()"
+                    @click="addImage()"
                 >
                     Create
                 </v-btn>
@@ -34,16 +34,12 @@
                             >
                             <v-icon>mdi-close</v-icon>
                         </v-btn>
-                        <v-toolbar-title v-if="editMode">Edit Project</v-toolbar-title>
-                        <v-toolbar-title v-else-if="showMode">Show Project</v-toolbar-title>
-                        <v-toolbar-title v-else-if="showAnalytic">Show Analytics</v-toolbar-title>
-                        <v-toolbar-title v-else>New Project</v-toolbar-title>
+                        <v-toolbar-title v-if="editMode">Edit Imagen</v-toolbar-title>
+                        <v-toolbar-title v-else>Create image</v-toolbar-title>
 
                     </v-toolbar>
                     <v-card-text>
-                        <form-new-project v-if="!showMode && !showAnalytic" :editMode="editMode" :showMode="showMode" :project="project" @save-project="saveProject" @update-project="updateProject"></form-new-project>
-                        <show-project v-if="showMode" :project="project"></show-project>
-                        <show-analytic-project v-if="showAnalytic" :project="project"></show-analytic-project>
+                        <form-images :editMode="editMode" :showMode="showMode" :image="image" @save-image="saveImage" @update-image="updateImage" :imageable_type="imageable_type" :id="id"/>
                     </v-card-text>
                 </v-card>
             </v-dialog>
@@ -57,7 +53,7 @@
             <v-data-table
                 v-if="!loading"
                 :headers="headers"
-                :items="projects"
+                :items="images"
                 :items-per-page="5"
                 class="elevation-1"
             >
@@ -71,33 +67,26 @@
                         <v-icon
                             class="mr-2"
                             color="warning"
-                            @click="showProject(item)"
+                            @click="showImage(item)"
                         >
                             mdi-eye
                         </v-icon>
                     </v-btn>
-                    
+
                     <v-icon
                         icon
                         class="mr-2"
                         color="accent"
-                        @click="editProject(item)"
+                        @click="editImage(item)"
                     >
                         mdi-pencil
                     </v-icon>
                     <v-icon
-                        v-if="item.is_delete"
                         color="error"
                         icon
-                        @click="deleteProject(item)"
+                        @click="deleteImage(item)"
                     >
                         mdi-delete
-                    </v-icon>
-                    <v-icon
-                        color="success"
-                        @click="showAnalytics(item)"
-                        icon>
-                        mdi-google-analytics
                     </v-icon>
                 </template>
             </v-data-table>
@@ -107,112 +96,114 @@
 <script>
     export default {
 
+        props: ['id', 'imageable_type'],
+
         data:() => ({
             loading: false,
-            projects: [],
-            project: '',
+            images: [],
+            image: '',
             headers: [
                 {
-                    text: 'Name',
+                    text: 'Title',
                     align: 'start',
-                    value: 'name',
+                    value: 'title',
                 },
-                { text: 'Start', value: 'start' },
-                { text: 'End', value: 'end' },
-                { text: 'Status', value: 'project_status' },
                 { text: 'Type', value: 'type' },
+                { text: 'Description', value: 'description' },
                 { text: 'Actions', value: 'actions' },
             ],
             dialog: false,
             editMode: false,
             showMode: false,
-            showAnalytic: false,
-            projectEmpty: {
-                name: '',
-                start: '',
-                end: '',
-                type: '',
-                attempt: '',
-                status: false,
-                project_type: '',
-                password_project: '',
-                file: '',
+            imageEmpty: {
+                title: '',
+                description: '',
+                path: '',
+                multimedia_type: '',
+                multimedia_id: '',
             },
         }),
 
         mounted(){
-            this.getProjects()
+            this.initialize()
         },
+
+        computed: {
+
+            url(){
+                if(this.imageable_type === 'Projects')
+                    return 'projects'
+            },
+        },
+
 
         methods: {
 
-            getProjects(){
-                let url = `/api/projects`
+            initialize(){
+                let url = `/api/${this.url}/image/${this.id}`
 
                 this.loading = true
 
                 axios.get(url)
                 .then((response => {
-                    let projects = response.data
-                    
-                    if(projects.length){
-                        this.projects = projects
+                    let images = response.data
+
+                    if(images.length){
+                        this.images = images
                     }else{
-                        this.projects = []
+                        this.images = []
                     }
 
                     this.loading = false
                 }))
             },
 
-            addProject(){
-                this.project = this.projectEmpty
+            addImage(){
+                this.image = this.imageEmpty
                 this.showMode = false
                 this.editMode = false
-                this.showAnalytic = false
                 this.dialog = true
             },
 
-            editProject(item){
-                this.project = item
+            editImage(item){
+                this.image = item
                 this.showMode = false
                 this.editMode = true
                 this.showAnalytic = false
                 this.dialog = true
             },
 
-            showProject(item){
-                console.log(item.id)
-                window.location.href = `/administrator/show/${item.id}`
+            showImage(item){
+                /* console.log(item.id)
+                window.location.href = `/administrator/show/${item.id}` */
             },
 
-            saveProject(){
+            saveImage(){
                 this.showMode = false
                 this.editMode = false
-                this.getProjects()
-                this.project = this.projectEmpty
+                this.initialize()
+                this.image = this.imageEmpty
                 this.dialog = false
             },
 
-            updateProject(){
+            updateImage(){
                 this.showMode = false
                 this.editMode = false
-                this.getProjects()
-                this.project = this.projectEmpty
+                this.initialize()
+                this.image = this.imageEmpty
                 this.dialog = false
             },
 
-            deleteProject(item){
-                
+            deleteImage(item){
+                let url = `/api/image/${item.id}`
+
+                axios.delete(url)
+                .then(response => {
+                    
+                    console.log('delete item');
+                })
             },
 
-            showAnalytics(item){
-                this.project = item
-                this.showMode = false
-                this.editMode = false
-                this.showAnalytic = true
-                this.dialog = true
-            },
         },
 
     }
