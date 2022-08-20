@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Projects\ProjectController;
 use App\Http\Controllers\Api\Students\StudentController;
+use App\Http\Controllers\Api\Images\ImageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +27,13 @@ Route::controller(ProjectController::class)->group(function(){
     Route::delete('/project/{project}', 'destroy');
     Route::get('/{project}/analytics', 'analytics');
 });
-
+//MULTIMEDIA
+Route::controller(ImageController::class)->group(function(){
+    Route::post('/image', 'store');
+    Route::put('/image/{image}', 'update');
+    Route::delete('/image/{image}', 'delete');
+    Route::get('/projects/image/{project}', 'imageProject');
+});
 //STUDENTS
 Route::controller(StudentController::class)->group(function(){
     Route::get('/projects-by-student/{student}', 'projectsByStudent');

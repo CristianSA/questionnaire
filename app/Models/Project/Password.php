@@ -10,6 +10,10 @@ class Password extends Model
 {
     use HasFactory;
 
+    protected $table = 'passwords';
+
+    protected $fillable = ['password', 'type', 'project_id'];
+
     public function project()
     {
         return $this->belongsTo(Project::class, 'project_id');

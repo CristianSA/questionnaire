@@ -24,13 +24,13 @@ import vuetify from './vuetify';
 
 //ADMIN
 // PROJECTS
-Vue.component('projects', require('./components/projects/Projects.vue').default);
-Vue.component('form-new-project', require('./components/projects/forms/New.vue').default);
+Vue.component('projects', require('./components/projects/Index.vue').default);
+Vue.component('form-project', require('./components/projects/Form.vue').default);
 Vue.component('show-project', require('./components/projects/Show.vue').default);
 Vue.component('show-analytic-project', require('./components/projects/analytics/ByProject.vue').default);
 // PROJECTS IMAGES
-Vue.component('index-project-images', require('./components/projects/images/Index.vue').default);
-Vue.component('form-project-images', require('./components/projects/images/Form.vue').default);
+Vue.component('index-images', require('./components/images/Index.vue').default);
+Vue.component('form-images', require('./components/images/Form.vue').default);
 // MODULES
 Vue.component('modules', require('./components/modules/Modules.vue').default);
 Vue.component('form-new-module', require('./components/modules/forms/New.vue').default);

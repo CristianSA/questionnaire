@@ -52,13 +52,14 @@
                         show-size
                         prepend-icon="mdi-paperclib"
                         accept=".xlsx, .xls"
+                        @change="handleFileUpload"
                     >
                         <template v-slot:selection="{text}">
                             <v-chip
                                 small
                                 label
                                 color="primary">
-                                {{ text }}    
+                                {{ text }}
                             </v-chip>
                         </template>
                     </v-file-input>
@@ -207,14 +208,14 @@
                     }else{
                         this.clear()
                     }
-                    
-                    
+
+
                 }
             },
         },
 
         mounted(){
-            //this.status = false
+            this.status = false
         },
 
         computed:{
@@ -248,33 +249,33 @@
                 this.password_project       = this.project.password
                 this.file                   = ''
             },
-            
+
             saveProject(){
                 let url = `/api/project`
 
-                /* console.log(this.file)
                 let formData = new FormData()
-                
+
                 formData.append('name', this.name);
                 formData.append('start', this.start);
                 formData.append('end', this.end);
                 formData.append('type', this.type);
-                formData.append('attempt', this.attempt);
+                formData.append('attempt', this.attempt ? 1 : 0);
                 formData.append('status', this.status);
                 formData.append('password_project', this.password_project);
-                formData.append('file', this.file); */
-                
+                formData.append('file', this.file);
 
-                const params = this.getParams()
-                /* console.log(formData) */
-                axios.post(url, params)
-                .then((response => {
+                axios.post(url, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                .then(response => {
                     let project = response.data
                     if(project){
                         this.$emit('save-project')
                         this.clear()
                     }
-                }))
+                })
             },
 
             updateProject(){
@@ -306,7 +307,11 @@
                 this.project_type = this.type
             },
 
+            handleFileUpload(e){
+                this.file = e
+            },
+
         },
-        
+
     }
 </script>

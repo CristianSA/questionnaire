@@ -40,7 +40,7 @@
 
                     </v-toolbar>
                     <v-card-text>
-                        <form-new-project v-if="editMode" :editMode="editMode" :showMode="showMode" :project="project" @save-project="saveProject" @update-project="updateProject"></form-new-project>
+                        <form-project v-if="editMode" :editMode="editMode" :showMode="showMode" :project="project" @save-project="saveProject" @update-project="updateProject"></form-project>
                         <show-project v-if="showMode" :project="project"></show-project>
                     </v-card-text>
                 </v-card>
@@ -74,7 +74,7 @@
                             mdi-eye
                         </v-icon>
                     </v-btn>
-                    
+
                     <v-icon
                         icon
                         class="mr-2"
@@ -131,7 +131,7 @@
                 axios.get(url)
                 .then((response => {
                     let projects = response.data
-                    
+
                     if(projects.length){
                         this.projects = projects
                     }else{

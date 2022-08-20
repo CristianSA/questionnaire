@@ -11,6 +11,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ProjectController extends Controller
 {
+
     public function projects()
     {
         return Project::all();
@@ -18,13 +19,15 @@ class ProjectController extends Controller
 
     public function store(Request $request)
     {
+        $status = $request->status == 'true' ? true : false;
+
         $project                        = new Project();
         $project->name                  = $request->name;
         $project->start                 = $request->start;
         $project->end                   = $request->end;
         $project->attempts              = $request->attempt;
         $project->type                  = $request->type;
-        $project->status                = $request->status;
+        $project->status                = $status;
 
         $project->save();
 
@@ -37,7 +40,7 @@ class ProjectController extends Controller
         }
 
         if($project->type == "MULTIPLE"){
-            Excel::import(new PasswordsImport, $project->id, $request->file('document'));
+            (new PasswordsImport)->import(request()->file('file'));
         }
 
         return $project;
@@ -93,17 +96,17 @@ class ProjectController extends Controller
         })->values();
 
         $answers->map(function($item) use($project){
-           
-            
-            
-            
+
+
+
+
             dd($item);
         });
 
         /* for($a=0;$a < $answers->count(); $a++){
             //x = 1 porque nunca habra 0 intentos?
             for($x=1;$x < $project->attempts; $x++){
-                
+
                 for($m=0;$m < count($answers[$a][$x]); $m++){
                     //if question is correct
                     if($answers[$a][$x][$m]['correct']){
@@ -111,7 +114,7 @@ class ProjectController extends Controller
                     }
                 }
             }
-            
+
         } */
         /* $answers->map(function($item){
             dd($item[1]);//by attempt?
