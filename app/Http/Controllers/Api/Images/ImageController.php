@@ -6,19 +6,32 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Image\Image;
 use App\Models\Project\Project;
-use Image as ImageFile;
 
 class ImageController extends Controller
 {
+    public function storeFile($file, $path)
+    {
+        if($file->file){
+            $name           = time() . $file->file->getClientOriginalName();
+            $route          = public_path($path);
+
+            $file->file('file')->move($route, $name);
+        }
+    }
+
+
     public function store(Request $request)
     {
         //save file image
+        $url = null;
+        $file_path = "/images/".$request->imageable_id."/".$request->type."/";
+        //$this->storeFile($request->file, $path);
         if($request->file){
             $file_name = time() .'_'.$request->file->getClientOriginalName();
-            $file_path = "/images/".$request->imageable_id."/".$request->type."/";
+
             $url       = $file_path.$file_name;
             $route     = public_path($file_path);
-            $storage = $request->file('file')->move($route, $file_name);
+            $request->file('file')->move($route, $file_name);
         }
 
         //save info
@@ -36,6 +49,14 @@ class ImageController extends Controller
 
     public function update(Image $image, Request $request)
     {
+        if($request->file){
+            $file_name = time() .'_'.$request->file->getClientOriginalName();
+            $file_path = "/images/".$request->imageable_id."/".$request->type."/";
+            $url       = $file_path.$file_name;
+            $route     = public_path($file_path);
+            $storage = $request->file('file')->move($route, $file_name);
+        }
+
         $image->title = $request->title;
         $image->description = $request->description;
         $image->path = $request->path;

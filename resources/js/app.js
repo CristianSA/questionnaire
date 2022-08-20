@@ -24,8 +24,8 @@ import vuetify from './vuetify';
 
 //ADMIN
 // PROJECTS
-Vue.component('projects', require('./components/projects/Projects.vue').default);
-Vue.component('form-new-project', require('./components/projects/forms/New.vue').default);
+Vue.component('projects', require('./components/projects/Index.vue').default);
+Vue.component('form-project', require('./components/projects/Form.vue').default);
 Vue.component('show-project', require('./components/projects/Show.vue').default);
 Vue.component('show-analytic-project', require('./components/projects/analytics/ByProject.vue').default);
 // PROJECTS IMAGES

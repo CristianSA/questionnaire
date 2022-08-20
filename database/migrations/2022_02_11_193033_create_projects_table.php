@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('end')->nullable();
             $table->integer('attempts');
             $table->string('type')->nullable();
-            $table->boolean('status')->default(0);
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }

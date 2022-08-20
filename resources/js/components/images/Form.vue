@@ -110,6 +110,7 @@
                 this.title                      = this.image.title
                 this.description                = this.image.description
                 this.type                       = this.image.type
+                
             },
 
             saveImage(){
@@ -131,12 +132,10 @@
                 data.append('imageable_type', this.imageable_type)
                 data.append('imageable_id', this.id)
 
-                //const params = this.getParams()
-                console.log(data)
                 axios.post(url, data, config)
                 .then((response => {
                     let image = response.data
-                    console.log(image)
+
                     if(image){
                         this.$emit('save-image')
                         this.clear()
@@ -147,9 +146,22 @@
             updateImage(){
                 let url = `/api/image/${this.image.id}`
 
-                const params = this.getParams()
+                const config = {
+                    headers: {
+                        'content-type': 'multipart/form-data'
+                    }
+                }
 
-                axios.put(url, params)
+                let data = new FormData()
+
+                data.append('file', this.file)
+                data.append('title', this.title)
+                data.append('description', this.description)
+                data.append('type', this.type)
+                data.append('imageable_type', this.imageable_type)
+                data.append('imageable_id', this.id)
+
+                axios.put(url, data, config)
                 .then((response => {
                     let image = response.data
                     if(image){
@@ -164,6 +176,7 @@
                 this.description                = ''
                 this.type                       = ''
                 this.file                       = ''
+                this.src                        = ''
             },
 
             loadPicture(file){

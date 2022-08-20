@@ -121,6 +121,8 @@
                 path: '',
                 multimedia_type: '',
                 multimedia_id: '',
+                file: '',
+                src: '',
             },
         }),
 
@@ -160,6 +162,7 @@
 
             addImage(){
                 this.image = this.imageEmpty
+                console.log(this.image)
                 this.showMode = false
                 this.editMode = false
                 this.dialog = true
@@ -199,7 +202,7 @@
 
                 axios.delete(url)
                 .then(response => {
-                    
+
                     console.log('delete item');
                 })
             },

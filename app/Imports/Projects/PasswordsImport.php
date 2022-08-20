@@ -1,29 +1,27 @@
 <?php
 
 namespace App\Imports\Projects;
-
-use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToModel;
 use App\Models\Project\Password;
+use App\Models\Project\Project;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class PasswordsImport implements ToModel
+class PasswordsImport implements ToModel, WithHeadingRow
 {
-    public $project_id;
-
-    public function __constructor($project_id)
-    {
-        $this->project_id = $project_id;
-    }
+    use Importable;
 
     /**
     * @param array $row
     */
     public function model(array $row)
     {
-        return new Passwords([
-            'password' => $row['password'],
+        $project_id = Project::get()->max('id');
+        
+        return new Password([
+            'password' => $row['passwords'],
             'type' => 'MULTIPLE',
-            'project_id' => $this->project_id,
+            'project_id' => $project_id,
         ]);
     }
 }

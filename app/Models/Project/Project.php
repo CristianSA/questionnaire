@@ -17,6 +17,10 @@ class Project extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'status' => 'boolean',
+    ];
+
     protected $appends = ['password', 'it_is_accesible', 'is_active', 'ids_modules', 'is_delete', 'project_status'];
 
     public function students()
