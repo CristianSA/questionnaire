@@ -6647,14 +6647,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -6835,6 +6827,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['project'],
@@ -6842,6 +6852,11 @@ __webpack_require__.r(__webpack_exports__);
     return {
       tabs: null
     };
+  },
+  computed: {
+    isMultiple: function isMultiple() {
+      return this.project.type === 'MULTIPLE' ? true : false;
+    }
   }
 });
 
@@ -14208,7 +14223,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.v-progress-circular[data-v-06b15eb4] {\n  margin: 1rem;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.v-progress-circular[data-v-06b15eb4] {\r\n  margin: 1rem;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -14232,7 +14247,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.v-progress-circular[data-v-7c5a69e4] {\n  margin: 1rem;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.v-progress-circular[data-v-7c5a69e4] {\r\n  margin: 1rem;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -35285,24 +35300,6 @@ var render = function () {
                             1
                           ),
                           _vm._v(" "),
-                          _c(
-                            "v-icon",
-                            {
-                              staticClass: "mr-2",
-                              attrs: { icon: "", color: "accent" },
-                              on: {
-                                click: function ($event) {
-                                  return _vm.editProject(item)
-                                },
-                              },
-                            },
-                            [
-                              _vm._v(
-                                "\n                    mdi-pencil\n                "
-                              ),
-                            ]
-                          ),
-                          _vm._v(" "),
                           item.is_delete
                             ? _c(
                                 "v-icon",
@@ -35388,6 +35385,24 @@ var render = function () {
             "v-card",
             [
               _c(
+                "v-toolbar",
+                { staticClass: "mb-2 elevation-0" },
+                [
+                  _c("v-toolbar-title", [_vm._v("General information")]),
+                  _vm._v(" "),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    { attrs: { color: "purple", icon: "" } },
+                    [_c("v-icon", [_vm._v("mdi-pencil")])],
+                    1
+                  ),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
                 "v-row",
                 { staticClass: "mx-5 mt-2" },
                 [
@@ -35424,7 +35439,7 @@ var render = function () {
                   _c("v-col", { attrs: { cols: "3" } }, [
                     _c("p", [_c("strong", [_vm._v("Status")])]),
                     _vm._v(" "),
-                    _c("p", [_vm._v(_vm._s(_vm.project.status))]),
+                    _c("p", [_vm._v(_vm._s(_vm.project.project_status))]),
                   ]),
                 ],
                 1
@@ -35447,6 +35462,12 @@ var render = function () {
               },
             },
             [
+              _vm.isMultiple
+                ? _c("v-tab", { attrs: { href: "#tab-passwords" } }, [
+                    _vm._v("\n                Passwords\n            "),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
               _c("v-tab", { attrs: { href: "#tab-images" } }, [
                 _vm._v("\n                Images\n            "),
               ]),
@@ -35470,6 +35491,12 @@ var render = function () {
               },
             },
             [
+              _vm.isMultiple
+                ? _c("v-tab-item", { attrs: { value: "tab-passwords" } }, [
+                    _vm._v("\n                test 2\n            "),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
               _c(
                 "v-tab-item",
                 { attrs: { value: "tab-images" } },

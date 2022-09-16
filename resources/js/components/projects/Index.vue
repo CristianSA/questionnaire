@@ -76,15 +76,7 @@
                             mdi-eye
                         </v-icon>
                     </v-btn>
-
-                    <v-icon
-                        icon
-                        class="mr-2"
-                        color="accent"
-                        @click="editProject(item)"
-                    >
-                        mdi-pencil
-                    </v-icon>
+                    
                     <v-icon
                         v-if="item.is_delete"
                         color="error"
