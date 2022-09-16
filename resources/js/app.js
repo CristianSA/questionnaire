@@ -11,16 +11,10 @@ window.Vue = require('vue').default;
 import Vue from 'vue';
 import vuetify from './vuetify';
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
+import route from 'ziggy';
+import { Ziggy } from './ziggy';
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+Vue.use(Ziggy);
 
 //ADMIN
 // PROJECTS
@@ -58,5 +52,6 @@ Vue.component('project-list', require('./components/students/projects/Projects.v
 
 const app = new Vue({
     el: '#app',
-    vuetify
+    vuetify,
+    route,
 });

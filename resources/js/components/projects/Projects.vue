@@ -71,12 +71,12 @@
                         <v-icon
                             class="mr-2"
                             color="warning"
-                            @click="showProject(item)"
+                            :href="route('admin show project', item)"
                         >
                             mdi-eye
                         </v-icon>
                     </v-btn>
-                    
+
                     <v-icon
                         icon
                         class="mr-2"
@@ -154,7 +154,7 @@
                 axios.get(url)
                 .then((response => {
                     let projects = response.data
-                    
+
                     if(projects.length){
                         this.projects = projects
                     }else{
@@ -181,11 +181,6 @@
                 this.dialog = true
             },
 
-            showProject(item){
-                console.log(item.id)
-                window.location.href = `/administrator/show/${item.id}`
-            },
-
             saveProject(){
                 this.showMode = false
                 this.editMode = false
@@ -203,7 +198,7 @@
             },
 
             deleteProject(item){
-                
+
             },
 
             showAnalytics(item){
