@@ -2,7 +2,7 @@
     <div>
         <v-container data-app>
             <v-toolbar
-                class="mb-2 transparent"
+                class="mb-2"
             >
                 <v-toolbar-title>Projects</v-toolbar-title>
                 <v-spacer></v-spacer>
@@ -41,7 +41,7 @@
 
                     </v-toolbar>
                     <v-card-text>
-                        <form-new-project v-if="!showMode && !showAnalytic" :editMode="editMode" :showMode="showMode" :project="project" @save-project="saveProject" @update-project="updateProject"></form-new-project>
+                        <form-project v-if="!showMode && !showAnalytic" :editMode="editMode" :showMode="showMode" :project="project" @save-project="saveProject" @update-project="updateProject"></form-project>
                         <show-project v-if="showMode" :project="project"></show-project>
                         <show-analytic-project v-if="showAnalytic" :project="project"></show-analytic-project>
                     </v-card-text>
@@ -77,14 +77,6 @@
                         </v-icon>
                     </v-btn>
                     
-                    <v-icon
-                        icon
-                        class="mr-2"
-                        color="accent"
-                        @click="editProject(item)"
-                    >
-                        mdi-pencil
-                    </v-icon>
                     <v-icon
                         v-if="item.is_delete"
                         color="error"
@@ -154,7 +146,7 @@
                 axios.get(url)
                 .then((response => {
                     let projects = response.data
-                    
+
                     if(projects.length){
                         this.projects = projects
                     }else{
@@ -203,7 +195,7 @@
             },
 
             deleteProject(item){
-                
+
             },
 
             showAnalytics(item){

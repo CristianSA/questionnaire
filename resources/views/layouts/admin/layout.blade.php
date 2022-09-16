@@ -40,7 +40,11 @@
             </div>
         </div>
     </nav>
+
     <div id="app" class="content">
+
+    <div id="app" class="content bg-dark">
+
         <v-app dark class="bg-dark">
             @yield('content')
         </v-app>
